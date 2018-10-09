@@ -46,10 +46,6 @@ var roleBuilder = {
       if (targets.length) {
         var primaryTarget = this.findPrimaryTarget(targets);
 
-        if (creep.id == '5bbbaa2b484ed23ae0c19433') {
-          primaryTarget = _.find(targets, (i) => i.structureType == STRUCTURE_CONTAINER);
-        }
-
         if (creep.build(primaryTarget) == ERR_NOT_IN_RANGE) {
           creep.moveTo(primaryTarget, {
             visualizePathStyle: {

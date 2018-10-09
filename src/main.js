@@ -34,17 +34,14 @@ module.exports.loop = function() {
                 room.memory.level = room.controller.level;
 
                 if (room.memory.level == 1) {
-                    room.memory.harvesters = 1;
                     room.memory.upgraders = 1;
                     room.memory.builders = 1;
                     room.memory.fixers = 0;
                 } else if (room.memory.level == 2) {
-                    room.memory.harvesters = 2;
                     room.memory.upgraders = 4;
                     room.memory.builders = 2;
                     room.memory.fixers = 1;
                 } else if (room.memory.level == 3) {
-                    room.memory.harvesters = 2;
                     room.memory.upgraders = 2;
                     room.memory.builders = 4;
                     room.memory.fixers = 1;

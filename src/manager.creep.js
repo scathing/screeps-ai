@@ -5,6 +5,8 @@ var managerCreep = {
     run: function(room) {
         // this.countUnit(['harvester', 'upgrader', 'builder']);
 
+        this.setMaxHarvesters(room);
+
         this.harvesterCountController(room);
         this.builderCountController(room);
         this.upgraderCountController(room);
@@ -43,14 +45,35 @@ var managerCreep = {
         // }
 
         var harvesters = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'harvester');
-        if (harvesters.length < room.memory.harvesters) {
+        if (harvesters.length < room.memory.harvesters.count) {
             var newName = 'harvester' + Game.time;
 
             var energy = managerEnergy.getRoomEnergy(room);
-            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
-            var spawn = Game.spawns['S1'];
+            
+            const spawn = _.find(Game.spawns, (spawn) => spawn.room.name == room.name);
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
-            this.spawnTopCreep(spawn, energy, newName, 'harvester', energyStructures);
+
+            var sourceId = room.memory.harvesters.sources.find((source) => {
+
+                var workersOnSource = 0;
+                harvesters.forEach((h) => {
+                    if(h.memory.sourceId == source.id){
+                        workersOnSource += 1;
+                    }
+                });
+
+
+                if(source.count > workersOnSource){
+                    return source;
+                }
+            }).id;
+
+            var memory = {
+                role: 'harvester',
+                sourceId: sourceId
+            };
+
+            this.spawnTopCreep(spawn, energy, newName, memory, energyStructures);
         }
     },
 
@@ -91,7 +114,10 @@ var managerCreep = {
             // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
-            this.spawnTopCreep(spawn, energy, newName, 'upgrader', energyStructures);
+            var memory = {
+                role: 'upgrader'
+            };
+            this.spawnTopCreep(spawn, energy, newName, memory, energyStructures);
         }
     },
 
@@ -121,7 +147,10 @@ var managerCreep = {
             // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
-            this.spawnTopCreep(spawn, energy, newName, 'builder', energyStructures);
+            var memory = {
+                role: 'builder'
+            };
+            this.spawnTopCreep(spawn, energy, newName, memory, energyStructures);
         }
     },
 
@@ -151,11 +180,14 @@ var managerCreep = {
             // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
-            this.spawnTopCreep(spawn, energy, newName, 'fixer', energyStructures);
+            var memory = {
+                role: 'fixer'
+            };
+            this.spawnTopCreep(spawn, energy, newName, memory, energyStructures);
         }
     },
 
-    spawnTopCreep: function(spawn, energy, name, type, energyStructures) {
+    spawnTopCreep: function(spawn, energy, name, memory, energyStructures) {
         var body;
         if (energy < 200) {
             return;
@@ -196,17 +228,9 @@ var managerCreep = {
         }
 
         if (!spawn.memory.plannedSpawn && !spawn.spawning) {
-            console.log(body);
-            console.log(spawn.spawnCreep(body, name, {
-                memory: {
-                    role: type
-                },
-                energyStructures: energyStructures
-            }));
+            console.log('Spawning new ' + memory.role + '. Spawn result: ' + 
+                spawn.spawnCreep(body, name, {memory: memory, energyStructures: energyStructures}));
             spawn.memory.plannedSpawn = true;
-            console.log('Spawning new ' + type);
-        } else {
-            console.log('Can\'t spawn new ' + type);
         }
     },
 
@@ -221,8 +245,52 @@ var managerCreep = {
         }
 
         console.log(message);
-    }
+    },
 
+    setMaxHarvesters: function(room) {
+
+        if (!room.memory.harvesters) {
+
+            const sourcesAvailablePlaces = [];
+
+            const terrain = new Room.Terrain(room.name);
+
+            var maxCount = 0;
+            var sources = room.find(FIND_SOURCES);
+            sources.forEach((source) => {
+                var maxCountBySource = 0;
+                var x = source.pos.x - 1;
+                var y = source.pos.y - 1;
+                for (var i = 0; i < 3; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        switch (terrain.get(x + i, y + j)) {
+                            case TERRAIN_MASK_WALL:
+                            case TERRAIN_MASK_LAVA:
+                                break;
+                            case TERRAIN_MASK_SWAMP:
+                            case 0:
+                                maxCount += 1;
+                                maxCountBySource += 1;
+                                break;
+                        }
+                    }
+                }
+
+                const availablePlaces = {
+                    id: source.id,
+                    count: maxCountBySource
+                };
+                sourcesAvailablePlaces.push(availablePlaces);
+            });
+
+            const harvesters = {
+                count: maxCount,
+                sources: sourcesAvailablePlaces
+            };
+
+            room.memory.harvesters = harvesters;
+        }
+    }
 };
 
 module.exports = managerCreep;
