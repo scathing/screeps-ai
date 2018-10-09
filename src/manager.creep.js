@@ -46,7 +46,7 @@ var managerCreep = {
         if (harvesters.length < room.memory.harvesters) {
             var newName = 'harvester' + Game.time;
 
-            var energy = energyController.getRoomEnergy(room);
+            var energy = managerEnergy.getRoomEnergy(room);
             // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
@@ -56,7 +56,7 @@ var managerCreep = {
 
     upgraderCountController: function(room) {
 
-        // if(energyController.getRoomEnergy(room) == energyController.getRoomEnergyCapacityAvailable(room)) {
+        // if(managerEnergy.getRoomEnergy(room) == managerEnergy.getRoomEnergyCapacityAvailable(room)) {
         //     var upgraders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'upgrader');
         //     if(upgraders.length == room.memory.upgraders) {
 
