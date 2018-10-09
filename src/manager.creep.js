@@ -1,28 +1,30 @@
-var energyController = require('energy-controller');
+var managerEnergy = require('manager.energy');
 
-var unitController = {
-    
+var managerCreep = {
+
     run: function(room) {
         // this.countUnit(['harvester', 'upgrader', 'builder']);
-        
+
         this.harvesterCountController(room);
         this.builderCountController(room);
         this.upgraderCountController(room);
         this.fixerCountController(room);
-        
-    
-        if(Game.spawns['S1'].spawning) {
+
+
+        if (Game.spawns['S1'].spawning) {
             Game.spawns['S1'].memory.plannedSpawn = false;
             var spawningCreep = Game.creeps[Game.spawns['S1'].spawning.name];
             Game.spawns['S1'].room.visual.text(
                 'new ' + spawningCreep.memory.role,
-                Game.spawns['S1'].pos.x + 1, 
-                Game.spawns['S1'].pos.y, 
-                {align: 'left', opacity: 0.8});
+                Game.spawns['S1'].pos.x + 1,
+                Game.spawns['S1'].pos.y, {
+                    align: 'left',
+                    opacity: 0.8
+                });
         }
-        
+
     },
-    
+
     harvesterCountController: function(room) {
         // var harvesters = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'harvester');
         // if(energyController.getRoomEnergy(room) == energyController.getRoomEnergyCapacityAvailable(room)) {
@@ -39,9 +41,9 @@ var unitController = {
         //         }
         //     }
         // }
-        
+
         var harvesters = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'harvester');
-        if(harvesters.length < room.memory.harvesters) {
+        if (harvesters.length < room.memory.harvesters) {
             var newName = 'harvester' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
@@ -51,15 +53,15 @@ var unitController = {
             this.spawnTopCreep(spawn, energy, newName, 'harvester', energyStructures);
         }
     },
-    
+
     upgraderCountController: function(room) {
-        
+
         // if(energyController.getRoomEnergy(room) == energyController.getRoomEnergyCapacityAvailable(room)) {
         //     var upgraders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'upgrader');
         //     if(upgraders.length == room.memory.upgraders) {
-                
+
         //         var shitCreep;
-                
+
         //         _.sortBy(upgraders, [function(o) { return 50 - o.body.length; }]);
         //         for(var idx in upgraders){
         //             var item = upgraders[idx];
@@ -80,9 +82,9 @@ var unitController = {
         //         }
         //     }
         // }
-        
+
         var upgraders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'upgrader');
-        if(upgraders.length < room.memory.upgraders) {
+        if (upgraders.length < room.memory.upgraders) {
             var newName = 'upgrader' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
@@ -92,9 +94,9 @@ var unitController = {
             this.spawnTopCreep(spawn, energy, newName, 'upgrader', energyStructures);
         }
     },
-    
+
     builderCountController: function(room) {
-        
+
         // if(energyController.getRoomEnergy(room) == energyController.getRoomEnergyCapacityAvailable(room)) {
         //     var builders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'builder');
         //     if(builders.length == room.memory.builders) {
@@ -110,9 +112,9 @@ var unitController = {
         //         }
         //     }
         // }
-        
-        var  builders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'builder');
-        if(builders.length < room.memory.builders) {
+
+        var builders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'builder');
+        if (builders.length < room.memory.builders) {
             var newName = 'builder' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
@@ -122,9 +124,9 @@ var unitController = {
             this.spawnTopCreep(spawn, energy, newName, 'builder', energyStructures);
         }
     },
-    
+
     fixerCountController: function(room) {
-        
+
         // if(energyController.getRoomEnergy(room) == energyController.getRoomEnergyCapacityAvailable(room)) {
         //     var builders = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'builder');
         //     if(builders.length == room.memory.builders) {
@@ -140,9 +142,9 @@ var unitController = {
         //         }
         //     }
         // }
-        
-        var  fixers = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'fixer');
-        if(fixers.length < room.memory.fixers) {
+
+        var fixers = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'fixer');
+        if (fixers.length < room.memory.fixers) {
             var newName = 'fixer' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
@@ -152,66 +154,75 @@ var unitController = {
             this.spawnTopCreep(spawn, energy, newName, 'fixer', energyStructures);
         }
     },
-    
+
     spawnTopCreep: function(spawn, energy, name, type, energyStructures) {
         var body;
-        if(energy < 200) {
+        if (energy < 200) {
             return;
-        } else if(energy >= 3650){
+        } else if (energy >= 3650) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
-        } else if(energy >= 2900){
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
+            ];
+        } else if (energy >= 2900) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
-        } else if(energy >= 2150){
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
+            ];
+        } else if (energy >= 2150) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
-        } else if(energy >= 1400){
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
+            ];
+        } else if (energy >= 1400) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                    WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
-        } else if(energy >= 650){
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
+            ];
+        } else if (energy >= 650) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
-        } else if(energy >= 550){
+        } else if (energy >= 550) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, MOVE];
-        } else if(energy >= 450){
+        } else if (energy >= 450) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY];
-        } else if(energy >= 400){
+        } else if (energy >= 400) {
             body = [WORK, CARRY, MOVE, WORK, WORK];
-        } else if(energy >= 300){
+        } else if (energy >= 300) {
             body = [WORK, CARRY, MOVE, WORK];
-        } else if(energy >= 200){
+        } else if (energy >= 200) {
             body = [WORK, CARRY, MOVE];
         }
-        
-        if(!spawn.memory.plannedSpawn && !spawn.spawning){
+
+        if (!spawn.memory.plannedSpawn && !spawn.spawning) {
             console.log(body);
-            console.log(spawn.spawnCreep(body, name, {memory: {role: type}, energyStructures: energyStructures}));
+            console.log(spawn.spawnCreep(body, name, {
+                memory: {
+                    role: type
+                },
+                energyStructures: energyStructures
+            }));
             spawn.memory.plannedSpawn = true;
             console.log('Spawning new ' + type);
         } else {
             console.log('Can\'t spawn new ' + type);
         }
     },
-    
+
     countUnit: function(unitNames) {
         var message = '';
-        
-        for(var index in unitNames) {
+
+        for (var index in unitNames) {
             var unitName = unitNames[index];
             var units = _.filter(Game.creeps, (creep) => creep.memory.role == unitName);
             message += unitName + 's: ' + units.length;
             message += ', ';
         }
-        
+
         console.log(message);
     }
-    
+
 };
 
-module.exports = unitController;
+module.exports = managerCreep;
