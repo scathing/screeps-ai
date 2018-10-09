@@ -3,6 +3,7 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleFixer = require('role.fixer');
 var roleAttacker = require('role.attacker');
+var roleSlave = require('role.slave');
 var unitController = require('unit-controller');
 var towerController = require('tower-controller');
 
@@ -20,7 +21,12 @@ module.exports.loop = function () {
         var room = Game.rooms[idx];
         if(room.controller.owner && room.controller.owner.username == 'Scathing') {
             if(!room.controller.safeMode || room.controller.safeMode <= 0) {
-                room.controller.activateSafeMode();
+                var enemyCreeps = room.find(FIND_CREEPS, {filter: (creep) => {
+                        return (creep.owner.username != 'Scathing');
+                }});
+                if(enemyCreeps.length) {
+                    room.controller.activateSafeMode();
+                }
             }
             if(room.memory.level != room.controller.level) {
                 room.memory.level = room.controller.level;
@@ -69,6 +75,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'attacker') {
             roleAttacker.run(creep);
+        }
+        if(creep.memory.role == 'slave') {
+            roleSlave.run(creep);
         }
     }
 }

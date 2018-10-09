@@ -11,10 +11,10 @@ var roleAttacker = {
         } else {
 
             var roomPos = new RoomPosition(9, 29, 'W68N72');
-	    
-	        var goals = _.filter(Game.rooms['W68N72'].find(FIND_STRUCTURES), (str) => str.structureType == STRUCTURE_TOWER);
-	        var goal = goals[0];
-	       // console.log(goal.energy);
+        
+            var goals = _.filter(Game.rooms['W68N72'].find(FIND_STRUCTURES), (str) => str.structureType == STRUCTURE_TOWER);
+            var goal = goals[0];
+           // console.log(goal.energy);
             // creep.rangedMassAttack(goal);
             // console.log(creep.pos);
             // console.log(roomPos);
@@ -41,7 +41,7 @@ var roleAttacker = {
                 // creep.move(BOTTOM);
             
         }
-	}
+    }
 };
 
 module.exports = roleAttacker;

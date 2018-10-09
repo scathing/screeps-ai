@@ -15,7 +15,7 @@ var unitController = {
             Game.spawns['S1'].memory.plannedSpawn = false;
             var spawningCreep = Game.creeps[Game.spawns['S1'].spawning.name];
             Game.spawns['S1'].room.visual.text(
-                '🐜️' + spawningCreep.memory.role,
+                'new ' + spawningCreep.memory.role,
                 Game.spawns['S1'].pos.x + 1, 
                 Game.spawns['S1'].pos.y, 
                 {align: 'left', opacity: 0.8});
@@ -45,7 +45,7 @@ var unitController = {
             var newName = 'harvester' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
-            // TODO тут надо  находить свободный спаун в нашей комнате
+            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             this.spawnTopCreep(spawn, energy, newName, 'harvester', energyStructures);
@@ -86,7 +86,7 @@ var unitController = {
             var newName = 'upgrader' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
-            // TODO тут надо  находить свободный спаун в нашей комнате
+            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             this.spawnTopCreep(spawn, energy, newName, 'upgrader', energyStructures);
@@ -116,7 +116,7 @@ var unitController = {
             var newName = 'builder' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
-            // TODO тут надо  находить свободный спаун в нашей комнате
+            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             this.spawnTopCreep(spawn, energy, newName, 'builder', energyStructures);
@@ -146,7 +146,7 @@ var unitController = {
             var newName = 'fixer' + Game.time;
 
             var energy = energyController.getRoomEnergy(room);
-            // TODO тут надо  находить свободный спаун в нашей комнате
+            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             this.spawnTopCreep(spawn, energy, newName, 'fixer', energyStructures);
