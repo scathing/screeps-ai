@@ -10,7 +10,7 @@ var roleBuilder = {
     var container;
     if (!creep.memory.harvestSourceId) {
       var sources = creep.room.find(FIND_SOURCES);
-      creep.memory.harvestSourceId = sources[1].id;
+      creep.memory.harvestSourceId = sources[0].id;
     }
     source = Game.getObjectById(creep.memory.harvestSourceId);
 
@@ -26,8 +26,9 @@ var roleBuilder = {
 
     if (creep.memory.withdrawSourceId) {
       container = Game.getObjectById(creep.memory.withdrawSourceId);
-      container = undefined;
+      
     }
+    container = undefined;
 
 
     if (creep.memory.building && creep.carry.energy == 0) {
