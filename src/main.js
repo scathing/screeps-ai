@@ -19,7 +19,7 @@ module.exports.loop = function() {
     for (var idx in Game.rooms) {
 
         var room = Game.rooms[idx];
-        if (room.controller.owner && room.controller.owner.username == 'Scathing') {
+        if (room.controller && room.controller.owner && room.controller.owner.username == 'Scathing') {
             if (!room.controller.safeMode || room.controller.safeMode <= 0) {
                 var enemyCreeps = room.find(FIND_CREEPS, {
                     filter: (creep) => {

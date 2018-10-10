@@ -1,5 +1,6 @@
 var roleFixer = require('role.fixer');
 var roleUpgrader = require('role.upgrader');
+var roleCarrier = require('role.carrier');
 
 var roleBuilder = {
 
@@ -19,16 +20,16 @@ var roleBuilder = {
       filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] > 0
     });
     if (containers.length) {
-      creep.memory.withdrawSourceId = containers[0].id;
+      var container = creep.pos.findClosestByRange(containers);
+      creep.memory.withdrawSourceId = container.id;
     } else {
       delete creep.memory.withdrawSourceId;
     }
 
     if (creep.memory.withdrawSourceId) {
       container = Game.getObjectById(creep.memory.withdrawSourceId);
-      
+
     }
-    container = undefined;
 
 
     if (creep.memory.building && creep.carry.energy == 0) {
@@ -58,6 +59,8 @@ var roleBuilder = {
       }
     } else {
 
+      roleCarrier.run(creep);
+
       if (container) {
         if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container.pos);
@@ -78,7 +81,7 @@ var roleBuilder = {
     var primaryTarget = _.find(targets, (i) => i.structureType == STRUCTURE_EXTENSION);
 
     if (!primaryTarget) {
-      primaryTarget = targets[0];
+      primaryTarget = targets[targets.length - 1];
     }
     return primaryTarget;
   }

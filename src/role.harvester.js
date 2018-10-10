@@ -34,8 +34,18 @@ var roleHarvester = {
             });
 
             if (targets.length > 0) {
-                if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {
+                var target = creep.pos.findClosestByRange(targets);
+                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, {
+                        visualizePathStyle: {
+                            stroke: '#ffffff'
+                        }
+                    });
+                }
+            } else if (containers.length > 0) {
+                var container = creep.pos.findClosestByRange(containers);
+                if (creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(container, {
                         visualizePathStyle: {
                             stroke: '#ffffff'
                         }
@@ -49,14 +59,7 @@ var roleHarvester = {
                         }
                     });
                 }
-            } else if (containers.length > 0) {
-                if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(containers[0], {
-                        visualizePathStyle: {
-                            stroke: '#ffffff'
-                        }
-                    });
-                }
+
             } else {
                 var flags = creep.room.find(FIND_FLAGS, {
                     filter: (flag) => {

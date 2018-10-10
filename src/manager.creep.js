@@ -49,7 +49,7 @@ var managerCreep = {
             var newName = 'harvester' + Game.time;
 
             var energy = managerEnergy.getRoomEnergy(room);
-            
+
             const spawn = _.find(Game.spawns, (spawn) => spawn.room.name == room.name);
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
 
@@ -57,13 +57,13 @@ var managerCreep = {
 
                 var workersOnSource = 0;
                 harvesters.forEach((h) => {
-                    if(h.memory.sourceId == source.id){
+                    if (h.memory.sourceId == source.id) {
                         workersOnSource += 1;
                     }
                 });
 
 
-                if(source.count > workersOnSource){
+                if (source.count > workersOnSource) {
                     return source;
                 }
             }).id;
@@ -111,7 +111,7 @@ var managerCreep = {
             var newName = 'upgrader' + Game.time;
 
             var energy = managerEnergy.getRoomEnergy(room);
-            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
+            // TODO ÃÂÃÂÃÂ ÃÂ½ÃÂ°ÃÂ´ÃÂ¾  ÃÂ½ÃÂ°ÃÂÃÂ¾ÃÂ´ÃÂ¸ÃÂÃÂ ÃÂÃÂ²ÃÂ¾ÃÂ±ÃÂ¾ÃÂ´ÃÂ½ÃÂÃÂ¹ ÃÂÃÂ¿ÃÂ°ÃÂÃÂ½ ÃÂ² ÃÂ½ÃÂ°ÃÂÃÂµÃÂ¹ ÃÂºÃÂ¾ÃÂ¼ÃÂ½ÃÂ°ÃÂÃÂµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             var memory = {
@@ -144,7 +144,7 @@ var managerCreep = {
             var newName = 'builder' + Game.time;
 
             var energy = managerEnergy.getRoomEnergy(room);
-            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
+            // TODO ÃÂÃÂÃÂ ÃÂ½ÃÂ°ÃÂ´ÃÂ¾  ÃÂ½ÃÂ°ÃÂÃÂ¾ÃÂ´ÃÂ¸ÃÂÃÂ ÃÂÃÂ²ÃÂ¾ÃÂ±ÃÂ¾ÃÂ´ÃÂ½ÃÂÃÂ¹ ÃÂÃÂ¿ÃÂ°ÃÂÃÂ½ ÃÂ² ÃÂ½ÃÂ°ÃÂÃÂµÃÂ¹ ÃÂºÃÂ¾ÃÂ¼ÃÂ½ÃÂ°ÃÂÃÂµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             var memory = {
@@ -177,7 +177,7 @@ var managerCreep = {
             var newName = 'fixer' + Game.time;
 
             var energy = managerEnergy.getRoomEnergy(room);
-            // TODO ÑÑÑ Ð½Ð°Ð´Ð¾  Ð½Ð°ÑÐ¾Ð´Ð¸ÑÑ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½ÑÐ¹ ÑÐ¿Ð°ÑÐ½ Ð² Ð½Ð°ÑÐµÐ¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
+            // TODO ÃÂÃÂÃÂ ÃÂ½ÃÂ°ÃÂ´ÃÂ¾  ÃÂ½ÃÂ°ÃÂÃÂ¾ÃÂ´ÃÂ¸ÃÂÃÂ ÃÂÃÂ²ÃÂ¾ÃÂ±ÃÂ¾ÃÂ´ÃÂ½ÃÂÃÂ¹ ÃÂÃÂ¿ÃÂ°ÃÂÃÂ½ ÃÂ² ÃÂ½ÃÂ°ÃÂÃÂµÃÂ¹ ÃÂºÃÂ¾ÃÂ¼ÃÂ½ÃÂ°ÃÂÃÂµ
             var spawn = Game.spawns['S1'];
             var energyStructures = _.filter(Game.structures, s => s.room.name == room.name);
             var memory = {
@@ -228,8 +228,11 @@ var managerCreep = {
         }
 
         if (!spawn.memory.plannedSpawn && !spawn.spawning) {
-            console.log('Spawning new ' + memory.role + '. Spawn result: ' + 
-                spawn.spawnCreep(body, name, {memory: memory, energyStructures: energyStructures}));
+            console.log('Spawning new ' + memory.role + '. Spawn result: ' +
+                spawn.spawnCreep(body, name, {
+                    memory: memory,
+                    energyStructures: energyStructures
+                }));
             spawn.memory.plannedSpawn = true;
         }
     },

@@ -10,10 +10,9 @@ var roleSlave = {
         //     }
         // } else {
 
-        //     var roomPos = new RoomPosition(9, 29, 'W68N72');
+        var roomPos = new RoomPosition(28, 48, 'W22S49');
 
-        //     var goals = _.filter(Game.rooms['W68N72'].find(FIND_STRUCTURES), (str) => str.structureType == STRUCTURE_TOWER);
-        //     var goal = goals[0];
+
         //    // console.log(goal.energy);
         //     // creep.rangedMassAttack(goal);
         //     // console.log(creep.pos);
@@ -22,11 +21,20 @@ var roleSlave = {
 
 
 
-        //     // if(creep.pos.x != roomPos.x || creep.pos.y != roomPos.y || creep.pos.roomName != roomPos.roomName) {
-        //     //     creep.moveTo(roomPos);
-        //     // } else {
-        //         creep.rangedMassAttack(goal);
-        //     // }
+        if (creep.pos.x != roomPos.x || creep.pos.y != roomPos.y || creep.pos.roomName != roomPos.roomName) {
+            creep.moveTo(roomPos, {
+                visualizePathStyle: {
+                    stroke: '#ff0000',
+                    strokeWidth: .35,
+                    lineStyle: 'undefined'
+                }
+            });
+        } else {
+            var goals = _.filter(Game.rooms['W22S49'].find(FIND_STRUCTURES), (str) => str.structureType == STRUCTURE_TOWER);
+            var goal = goals[0];
+            creep.say('for mother Russia =)');
+            creep.rangedMassAttack(goal);
+        }
 
 
 

@@ -1,12 +1,12 @@
 var managerEnergy = {
 
-  getRoomEnergy: function(room) {
-    return room.energyAvailable;
-  },
+	getRoomEnergy: function(room) {
+		return room.energyAvailable;
+	},
 
-  getRoomEnergyCapacityAvailable: function(room) {
-    return room.energyCapacityAvailable;
-  }
+	getRoomEnergyCapacityAvailable: function(room) {
+		return room.energyCapacityAvailable;
+	}
 };
 
 module.exports = managerEnergy;
