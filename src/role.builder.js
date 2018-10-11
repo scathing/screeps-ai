@@ -17,7 +17,8 @@ var roleBuilder = {
 
 
     var containers = creep.room.find(FIND_STRUCTURES, {
-      filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] > 0
+      filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) 
+      && structure.store[RESOURCE_ENERGY] > 0
     });
     if (containers.length) {
       var container = creep.pos.findClosestByRange(containers);
