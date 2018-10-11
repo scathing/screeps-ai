@@ -12,10 +12,11 @@ var roleUpgrader = {
 
 
         var containers = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) && structure.store[RESOURCE_ENERGY] > 0
+            filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) 
+            && structure.store[RESOURCE_ENERGY] > 0
         });
         if (containers.length) {
-            creep.memory.withdrawSourceId = containers[0].id;
+            creep.memory.withdrawSourceId = creep.pos.findClosestByRange(containers).id;
         } else {
             delete creep.memory.withdrawSourceId;
         }
