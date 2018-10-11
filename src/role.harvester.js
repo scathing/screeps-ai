@@ -21,13 +21,6 @@ var roleHarvester = {
                 }
             });
 
-            // TODO
-            // var towers = creep.room.find(FIND_STRUCTURES, {
-            //     filter: (structure) => {
-            //         return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
-            //     }
-            // });
-
             var containers = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
                     return ((structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) &&
@@ -53,15 +46,6 @@ var roleHarvester = {
                         }
                     });
                 }
-            } else if (towers.length > 0) {
-                if (creep.transfer(towers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(towers[0], {
-                        visualizePathStyle: {
-                            stroke: '#ffffff'
-                        }
-                    });
-                }
-
             } else {
                 var flags = creep.room.find(FIND_FLAGS, {
                     filter: (flag) => {
