@@ -21,15 +21,17 @@ var roleHarvester = {
                 }
             });
 
+            // TODO
+            // var towers = creep.room.find(FIND_STRUCTURES, {
+            //     filter: (structure) => {
+            //         return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
+            //     }
+            // });
+
             var containers = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] < structure.storeCapacity);
-                }
-            });
-
-            var towers = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
+                    return ((structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) &&
+                        structure.store[RESOURCE_ENERGY] < structure.storeCapacity);
                 }
             });
 

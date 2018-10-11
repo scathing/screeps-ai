@@ -43,7 +43,7 @@ var managerCreep = {
         //         }
         //     }
         // }
-
+        
         var harvesters = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'harvester');
         if (harvesters.length < room.memory.harvesters.count) {
             var newName = 'harvester' + Game.time;

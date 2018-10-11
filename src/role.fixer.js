@@ -3,6 +3,28 @@ var roleFixer = {
   /** @param {Creep} creep **/
   run: function(creep) {
 
+    var source;
+    var container;
+    if (!creep.memory.harvestSourceId) {
+      var sources = creep.room.find(FIND_SOURCES);
+      creep.memory.harvestSourceId = sources[1].id;
+    }
+    source = Game.getObjectById(creep.memory.harvestSourceId);
+
+
+    var containers = creep.room.find(FIND_STRUCTURES, {
+      filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) && structure.store[RESOURCE_ENERGY] > 0
+    });
+    if (containers.length) {
+      creep.memory.withdrawSourceId = containers[0].id;
+    } else {
+      delete creep.memory.withdrawSourceId;
+    }
+
+    if (creep.memory.withdrawSourceId) {
+      container = Game.getObjectById(creep.memory.withdrawSourceId);
+    }
+
     if (creep.memory.fixing && creep.carry.energy == 0) {
       creep.memory.fixing = false;
       creep.say('harvest');
@@ -29,14 +51,16 @@ var roleFixer = {
         creep.moveTo(target);
       }
     } else {
-      var sources = creep.room.find(FIND_SOURCES);
-      if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(sources[0], {
-          visualizePathStyle: {
-            stroke: '#ffaa00'
-          }
-        });
+      if (container) {
+        if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(container.pos);
+          creep.say('withdraw');
+        }
+      } else if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(source);
+        creep.say('harvest');
       }
+
     }
   },
 

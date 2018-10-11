@@ -9,4 +9,6 @@ var managerEnergy = {
 	}
 };
 
+
+
 module.exports = managerEnergy;
