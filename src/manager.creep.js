@@ -43,7 +43,7 @@ var managerCreep = {
         //         }
         //     }
         // }
-        
+
         var harvesters = _.filter(Game.creeps, (creep) => creep.room.name == room.name && creep.memory.role == 'harvester');
         if (harvesters.length < room.memory.harvesters.count) {
             var newName = 'harvester' + Game.time;
@@ -209,10 +209,12 @@ var managerCreep = {
                 WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
                 WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
             ];
-        } else if (energy >= 1400) {
+        } else if (energy >= 1300) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE,
-                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE
+                WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE
             ];
+        } else if (energy >= 800) {
+            body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, WORK, CARRY];
         } else if (energy >= 650) {
             body = [WORK, CARRY, MOVE, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
         } else if (energy >= 550) {
