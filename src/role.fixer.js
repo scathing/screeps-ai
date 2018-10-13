@@ -36,20 +36,30 @@ var roleFixer = {
 
     if (creep.memory.fixing) {
 
-      var targets = creep.room.find(FIND_STRUCTURES);
-      if (targets.length) {
-        var primaryTarget = this.findPrimaryTarget(targets);
-        if (creep.repair(primaryTarget) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(primaryTarget, {
-            visualizePathStyle: {
-              stroke: '#000000'
-            }
-          });
+
+      if (!creep.memory.fixTarget) {
+        var targets = creep.room.find(FIND_STRUCTURES);
+        if (targets.length) {
+          var primaryTarget = this.findPrimaryTarget(targets);
+          creep.memory.fixTarget = primaryTarget.id;
         }
-      } else {
-        var target = Game.spawns.S1;
-        creep.moveTo(target);
       }
+
+      const fixTarget = Game.getObjectById(creep.memory.fixTarget);
+
+      if(fixTarget.hits == fixTarget.hitsMax) {
+        delete creep.memory.fixTarget;
+        return;
+      }
+      if (creep.repair(fixTarget) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(fixTarget, {
+          visualizePathStyle: {
+            stroke: '#000000'
+          }
+        });
+      }
+
+
     } else {
       if (container) {
         if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
