@@ -40,24 +40,27 @@ var roleFixer = {
       if (!creep.memory.fixTarget) {
         var targets = creep.room.find(FIND_STRUCTURES);
         if (targets.length) {
-          targets = _.sortBy(targets, [function(tar) { return tar.hits; }]);
+          targets = _.sortBy(targets, [function(tar) {
+            return tar.hits;
+          }]);
           var primaryTarget = this.findPrimaryTarget(targets);
           creep.memory.fixTarget = primaryTarget.id;
         }
-      }
+      } else {
 
-      const fixTarget = Game.getObjectById(creep.memory.fixTarget);
+        const fixTarget = Game.getObjectById(creep.memory.fixTarget);
 
-      if(fixTarget.hits == fixTarget.hitsMax) {
-        delete creep.memory.fixTarget;
-        return;
-      }
-      if (creep.repair(fixTarget) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(fixTarget, {
-          visualizePathStyle: {
-            stroke: '#000000'
-          }
-        });
+        if (fixTarget.hits == fixTarget.hitsMax) {
+          delete creep.memory.fixTarget;
+          return;
+        }
+        if (creep.repair(fixTarget) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(fixTarget, {
+            visualizePathStyle: {
+              stroke: '#000000'
+            }
+          });
+        }
       }
 
 
