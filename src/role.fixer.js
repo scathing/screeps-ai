@@ -40,7 +40,7 @@ var roleFixer = {
       if (!creep.memory.fixTarget) {
         var targets = creep.room.find(FIND_STRUCTURES);
         if (targets.length) {
-          _.sortBy(targets, (tar) => return tar.hits);
+          _.sortBy(targets, (tar) => {return tar.hits});
           var primaryTarget = this.findPrimaryTarget(targets);
           creep.memory.fixTarget = primaryTarget.id;
         }
