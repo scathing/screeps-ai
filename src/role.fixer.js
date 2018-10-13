@@ -75,7 +75,7 @@ var roleFixer = {
 
     if (!primaryTarget) {
       primaryTarget = _.find(targets, (structure) => {
-        if ((structure.structureType == STRUCTURE_WALL && structure.hits < 50000)) {
+        if ((structure.structureType == STRUCTURE_WALL && structure.hits < 70000)) {
           return structure;
         }
       });

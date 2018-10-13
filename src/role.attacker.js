@@ -10,10 +10,10 @@ var roleAttacker = {
             }
         } else {
 
-            var roomPos = new RoomPosition(9, 29, 'W68N72');
+            var roomPos = new RoomPosition(42, 24, 'W21S49');
+            // var roomPos = new RoomPosition(45, 1, 'W22S50');
 
-            var goals = _.filter(Game.rooms['W68N72'].find(FIND_STRUCTURES), (str) => str.structureType == STRUCTURE_TOWER);
-            var goal = goals[0];
+            
             // console.log(goal.energy);
             // creep.rangedMassAttack(goal);
             // console.log(creep.pos);
@@ -22,11 +22,16 @@ var roleAttacker = {
 
 
 
-            // if(creep.pos.x != roomPos.x || creep.pos.y != roomPos.y || creep.pos.roomName != roomPos.roomName) {
-            //     creep.moveTo(roomPos);
-            // } else {
-            creep.rangedMassAttack(goal);
-            // }
+            if(creep.pos.x != roomPos.x || creep.pos.y != roomPos.y || creep.pos.roomName != roomPos.roomName) {
+               creep.moveTo(roomPos);
+            } else {
+                var goals = _.filter(Game.rooms['W22S49'].find(FIND_STRUCTURES), (str) => str.id == '5b6809f846e65a55d5d8bf1d');
+                
+            var goal = goals[0];
+            // var goal = Game.room.getObjectById('5bc12e100126a768ec6b2854');
+                creep.attack(goal);
+                
+            }
 
 
 
