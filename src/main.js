@@ -27,7 +27,7 @@ module.exports.loop = function() {
                     }
                 });
                 if (enemyCreeps.length) {
-                    room.controller.activateSafeMode();
+                    // room.controller.activateSafeMode();
                 }
             }
             if (room.memory.level != room.controller.level) {

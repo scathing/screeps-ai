@@ -82,14 +82,14 @@ var roleFixer = {
     var primaryTarget = _.find(targets, (structure) => {
       if ((structure.structureType == STRUCTURE_ROAD && structure.hits + 1000 < structure.hitsMax) ||
         (structure.structureType == STRUCTURE_CONTAINER && structure.hits + 50000 < structure.hitsMax) ||
-        (structure.structureType == STRUCTURE_RAMPART && structure.hits + 900000 < structure.hitsMax)) {
+        (structure.structureType == STRUCTURE_RAMPART && structure.hits + 20000000 < structure.hitsMax)) {
         return structure;
       }
     });
 
     if (!primaryTarget) {
       primaryTarget = _.find(targets, (structure) => {
-        if ((structure.structureType == STRUCTURE_WALL && structure.hits < 100000)) {
+        if ((structure.structureType == STRUCTURE_WALL && structure.hits < 2000000)) {
           return structure;
         }
       });

@@ -4,9 +4,12 @@ var roleCarrier = {
   run: function(creep) {
 
     var tomstones = creep.room.find(FIND_TOMBSTONES);
+    
     if(tomstones.length && creep.carry == 0){
         var tombstone = creep.pos.findClosestByRange(tombstones);
+        console.log(creep.withdraw(tombstone, RESOURCE_ENERGY));
         if(creep.withdraw(tombstone, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+            
             creep.moveTo(tombstone.pos);
         }
 
