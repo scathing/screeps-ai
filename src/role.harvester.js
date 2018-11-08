@@ -8,7 +8,8 @@ var roleHarvester = {
             creep.say('harvest');
         }
 
-        if (!creep.memory.suply && creep.carry.energy == creep.carryCapacity) {
+        if (!creep.memory.suply && (creep.carry.energy == creep.carryCapacity ||
+                (creep.carry.energy > 0 && Game.getObjectById(creep.memory.sourceId).enegry === 0))) {
             creep.memory.suply = true;
             creep.say('suply');
         }
