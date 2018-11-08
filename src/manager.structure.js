@@ -48,8 +48,12 @@ var managerStructure = {
 		return this.structures;
 	},
 
-	findStructures: function(structures, structureType) {
-		return _.filter(structures, structure => structure.structureType == structureType);
+	findStructures: function(room, structures, structureType) {
+		return _.filter(this.getStructures(this.findRoom(room)), structure => structure.structureType == structureType);
+	}
+
+	findRoom: function(room) {
+		return _.filter(rooms, r => r.name == room.name);
 	}
 
 }
