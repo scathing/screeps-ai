@@ -17,8 +17,8 @@ var roleBuilder = {
 
 
     var containers = creep.room.find(FIND_STRUCTURES, {
-      filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) 
-      && structure.store[RESOURCE_ENERGY] > 0
+      filter: (structure) => (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE) &&
+        structure.store[RESOURCE_ENERGY] > 0
     });
     if (containers.length) {
       var container = creep.pos.findClosestByRange(containers);
@@ -46,23 +46,27 @@ var roleBuilder = {
 
       var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
       var towers = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-              return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
-            }
-          });
-      if (targets.length) {
-        var primaryTarget = this.findPrimaryTarget(targets);
+        filter: (structure) => {
+          return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
+        }
+      });
 
-        if (creep.build(primaryTarget) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(primaryTarget, {
+      if (towers.length > 0) {
+        if (creep.transfer(towers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(towers[0], {
             visualizePathStyle: {
               stroke: '#ffffff'
             }
           });
         }
-      } else if (towers.length > 0) {
-        if (creep.transfer(towers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(towers[0], {
+      }
+
+
+      if (targets.length) {
+        var primaryTarget = this.findPrimaryTarget(targets);
+
+        if (creep.build(primaryTarget) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(primaryTarget, {
             visualizePathStyle: {
               stroke: '#ffffff'
             }
