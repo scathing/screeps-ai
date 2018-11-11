@@ -59,10 +59,7 @@ var roleBuilder = {
             }
           });
         }
-      }
-
-
-      if (targets.length) {
+      } else if (targets.length) {
         var primaryTarget = this.findPrimaryTarget(targets);
 
         if (creep.build(primaryTarget) == ERR_NOT_IN_RANGE) {
